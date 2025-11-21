@@ -8,6 +8,7 @@ use crate::{
         AppState, AudioQuality, Authentication, Config, Preferences, PreferencesTab, Promise,
         SliderScrollScale, Theme,
     },
+    t,
     widget::{icons, Async, Border, Checkbox, MyWidgetExt},
 };
 use druid::{
@@ -129,11 +130,12 @@ pub fn preferences_widget() -> impl Widget<AppState> {
 }
 
 fn tabs_widget() -> impl Widget<AppState> {
+    let static_ref: &'static str = Box::leak(t!("test_text").into_owned().into_boxed_str());
     Flex::row()
         .must_fill_main_axis(true)
         .main_axis_alignment(MainAxisAlignment::Center)
         .with_child(tab_link_widget(
-            "General",
+            static_ref,
             &icons::PREFERENCES,
             PreferencesTab::General,
         ))

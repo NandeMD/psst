@@ -12,6 +12,7 @@ mod widget;
 
 use druid::AppLauncher;
 use env_logger::{Builder, Env};
+pub use rust_i18n::t;
 use webapi::WebApi;
 
 use psst_core::cache::Cache;
@@ -24,6 +25,9 @@ use crate::{
 const ENV_LOG: &str = "PSST_LOG";
 const ENV_LOG_STYLE: &str = "PSST_LOG_STYLE";
 
+// This needs to be in the crate root to work properly.
+rust_i18n::i18n!("locales");
+
 fn main() {
     // Setup logging from the env variables, with defaults.
     Builder::from_env(
@@ -32,6 +36,9 @@ fn main() {
             .write_style(ENV_LOG_STYLE),
     )
     .init();
+
+    // Setup internationalization
+    rust_i18n::set_locale("tr");
 
     // Load configuration
     let config = Config::load().unwrap_or_default();
